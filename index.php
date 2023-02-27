@@ -1,7 +1,7 @@
 <?php
 	include_once "controller/database_connection.php";
 
-	$db = new Database(
+	$db = new DatabaseConnection(
 		"127.0.0.1",
 		"todo",
 		"mariapass",
@@ -9,6 +9,12 @@
 	);
 
 	$db->initialize_db();
+
+	$a[] = 1;
+	$a[] = 2;
+	$a[] = 3;
+
+	var_dump($a);
 ?>
 
 <!DOCTYPE html>
@@ -21,8 +27,8 @@
 </head>
 <body>
 	<div>
-		<h1>First php web app</h1>
-		<p>My first php web app is here</p>
+		<input type="text" value="Input new item!">
+		<button>Input</button>
 	</div>
 </body>
 </html>
