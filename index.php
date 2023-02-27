@@ -10,11 +10,6 @@
 
 	$db->initialize_db();
 
-	$a[] = 1;
-	$a[] = 2;
-	$a[] = 3;
-
-	var_dump($a);
 ?>
 
 <!DOCTYPE html>
