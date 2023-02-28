@@ -1,0 +1,11 @@
+li {
+    list-style-type: none;
+}
+
+li.ItemNotDone {
+    text-decoration-line: none;
+}
+
+li.ItemDone {
+    text-decoration: line-through;
+}

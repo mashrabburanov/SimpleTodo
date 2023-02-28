@@ -32,7 +32,7 @@
 			}
 		}
 
-		public function select_db() {
+		public function select_all_db() {
 			$stmnt = $this->PDOconnection->query("SELECT * FROM todoes");
 			$stmnt->setFetchMode(PDO::FETCH_ASSOC);
 			return $stmnt->fetchAll();
