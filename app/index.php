@@ -7,25 +7,27 @@
 
 	<link rel="stylesheet" href="./view/css/styles.css">
 
-	<title>Document</title>
+	<title>TodoList</title>
 </head>
 <body>
 	<div class="Container">
-		<div class="InputBar">
-			<input type="text" value="Input new item!">
-			<button>Add item</button>
-		</div>
+		<form action="./controller/inserttItem.php" class="InputBar">
+			<input type="text" value="Input new item!" name="content">
+			<input type="submit" value="Add item">
+		</form>
 		<div class="ListContainer">
 			<ul>
 				<?php
+					# initial print
 					include_once "controller/class.DatabaseConnection.php";
 					include_once "./view/class.ItemList.php";
+					include_once "./controller/constants.php";
 
 					$db = new DatabaseConnection(
-						"127.0.0.1",
-						"todo",
-						"mariapass",
-						"TodoListDB",
+						HOST,
+						USER,
+						PASSWORD,
+						DATABASE
 					);
 
 					$db->initialize_db(); 

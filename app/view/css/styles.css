@@ -9,3 +9,13 @@ li.ItemNotDone {
 li.ItemDone {
     text-decoration: line-through;
 }
+
+body {
+    background-color: gray;
+}
+
+.Container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(50%);
+}
