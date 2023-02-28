@@ -11,15 +11,21 @@
 
     $db->initialize_db();
 
-    $url = "../index.php";
+    $urlMain = "../index.php";
+    $urlError = "../view/index.html";
 
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
         if (!empty($_GET["content"])) {
             $data = $_GET["content"];
             $db->insert_db($data);
-            header("Location: $url");
+            header("Location: $urlMain");
             die();
         }
+        else {
+            header("Location: $urlError");
+            die();
+        }
+    } else {
+        header("Location: $urlError");
+        die();
     }
-
-    header("Location: $url");
