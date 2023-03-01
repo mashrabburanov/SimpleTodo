@@ -1,48 +1,78 @@
 <?php
 
 	class DatabaseConnection {
-		protected string $host;
-		protected string $user;
-		protected string $password;
-		protected string $database;
-
 		protected PDO $PDOconnection;
+		private static DatabaseConnection $instance;
 
-		public function __construct(
+		protected function __construct(
 			string $host,
 			string $user, 
 			string $password, 
 			string $database)
 		{
-			$this->host = $host;
-			$this->user = $user;
-			$this->password = $password;
-			$this->database = $database;
+			$this->initializeDBC($host, $user, $password, $database);
 		}
 
-		public function initialize_db(): void {
-			try {
-				$this->PDOconnection = new PDO(
-					"mysql:host=$this->host;dbname=$this->database", 
-					$this->user, 
-					$this->password);
-				$this->PDOconnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			} catch (PDOException $exception) {
-				echo "Fail: " . $exception->getMessage();
+		protected function __clone()
+		{
+			
+		}
+
+		public static function getInstance(
+			string $host, 
+			string $user, 
+			string $password, 
+			string $database): DatabaseConnection 
+		{
+			if (!isset(self::$instance)) {
+				self::$instance = new DatabaseConnection(
+					$host,
+					$user,
+					$password,
+					$database
+				);
 			}
-		}
 
-		public function select_all_db() {
+			return self::$instance;
+		}
+		
+		protected function initializeDBC(
+			string $host,
+			string $user,
+			string $password,
+			string $database): void 
+			{
+				try {
+					$this->PDOconnection = new PDO("mysql:host=$host;dbname=$database", $user, $password);
+					$this->PDOconnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				} catch (PDOException $exception) {
+					echo "Fail: " . $exception->getMessage();
+				}
+			}
+
+		public function reinitializeDBC(
+			string $host,
+			string $user,
+			string $password,
+			string $database) 
+		{
+			$this->initializeDBC($host, $user, $password, $database);
+		}
+			
+		public function selectAllRecords() {
 			$stmnt = $this->PDOconnection->query("SELECT * FROM todoes");
 			$stmnt->setFetchMode(PDO::FETCH_ASSOC);
+			
 			return $stmnt->fetchAll();
 		}
 
-		public function insert_db(string $content) {
+		public function insertRecord(string $content) {
 			$this->PDOconnection->query("INSERT INTO todoes (content, done) VALUES ('$content', false);");
 		}
 
-		public function delete_db(int $id) {
+		public function deleteRecord(int $id) {
 			$this->PDOconnection->query("DELETE FROM todoes WHERE id=$id;");
 		}
+
+		# alter done col
 	}

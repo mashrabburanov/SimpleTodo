@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="Container">
-		<form action="./controller/inserttItem.php" class="InputBar">
+		<form class="InputBar" action="./controller/inserttItem.php" method ="get">
 			<input type="text" value="Input new item!" name="content">
 			<input type="submit" value="Add item">
 		</form>
@@ -23,15 +23,14 @@
 					include_once "./view/class.ItemList.php";
 					include_once "./controller/constants.php";
 
-					$db = new DatabaseConnection(
+					$dbc = DatabaseConnection::getInstance(
 						HOST,
 						USER,
 						PASSWORD,
 						DATABASE
 					);
 
-					$db->initialize_db(); 
-					$stmnt = $db->select_all_db();
+					$stmnt = $dbc->selectAllRecords();
 
 					$list = new ItemsList($stmnt);
 					$list->print_list();
